@@ -1,9 +1,11 @@
 <%-- 
     Document   : StoreHome
-    Created on : Aug 16, 2016, 2:47:10 PM
-    Author     : ESC
+    Created on : Aug 16, 2016, 3:28:49 PM
+    Author     : test
 --%>
-
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="Model.ProductBean"%>
+<%@page import="java.util.List" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,25 +17,44 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Shop Homepage - Start Bootstrap Template</title>
+    <title>Shop Homepage</title>
 
-    <!-- Bootstrap Core CSS -->
     <link href="design/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom CSS -->
     <link href="design/css/shop-homepage.css" rel="stylesheet">
+    
+    <script type="text/javascript">
+  function sendajax(){
+	  var name = document.getElementById("name").value;
+	  var xmlhttp = new XMLHttpRequest();
+	  xmlhttp.open("POST","HomeStoreController",true);
+	  xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	  xmlhttp.send("name="+ name);
+	  xmlhttp.onreadystatechange = function()
+	  {
+		  if( xmlhttp.readyState == 4 && xmlhttp.status == 200)
+			  {
+			    var json = JSON.parse(xmlhttp.responseText);
+			    alert(json.name)
+			    var table1 = document.getElementById("table");
+			    var td1 = document.createElement("td");
+			    td1.vale = "djkd";
+			    td1.innerHTML = "enter";
+			    table1.appendChild(td1);
+			    document.getElementById("show_response").innerHTML = xmlhttp.responseText;
+			  }
+	  }
+          return false;
+  }
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+</script>
 
 </head>
 
 <body>
 
+    
+    
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
@@ -78,6 +99,22 @@
                     <a href="#" class="list-group-item">Category 2</a>
                     <a href="#" class="list-group-item">Category 3</a>
                 </div>
+                <br>
+                <p> Your Basket </p>
+                <br>
+                         <table class="table">
+                
+                                <thead>
+                                  <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>quantity</th>
+                                    <th>image</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                                </table>
             </div>
 
             <div class="col-md-9">
@@ -93,13 +130,13 @@
                             </ol>
                             <div class="carousel-inner">
                                 <div class="item active">
-                                    <img class="slide-image" src="http://placehold.it/800x300" alt="">
+                                    <img class="slide-image" src="images/slide1.jpg" alt="">
                                 </div>
                                 <div class="item">
-                                    <img class="slide-image" src="http://placehold.it/800x300" alt="">
+                                    <img class="slide-image" src="images/slide1.jpg" alt="">
                                 </div>
                                 <div class="item">
-                                    <img class="slide-image" src="http://placehold.it/800x300" alt="">
+                                    <img class="slide-image" src="images/slide3.jpeg" alt="">
                                 </div>
                             </div>
                             <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
@@ -112,118 +149,76 @@
                     </div>
 
                 </div>
-
+                <form action ="BasketController" method="POST">
                 <div class="row">
 
                     <div class="col-sm-4 col-lg-4 col-md-4">
                         <div class="thumbnail">
-                            <img src="http://placehold.it/320x150" alt="">
+                            <img src="images/t_shirt1.jpeg" alt="">
                             <div class="caption">
                                 <h4 class="pull-right">$24.99</h4>
-                                <h4><a href="StoreItem.jsp">First Product</a>
+                                <h4 name="first" value="first"><a href="StoreItem.jsp">First Product</a>
                                 </h4>
-                                <p>See more snippets like this online store item at <a target="_blank" href="http://www.bootsnipp.com">Bootsnipp - http://bootsnipp.com</a>.</p>
+                                <p>See more snippets like this online store item at.</p>
+                                
                             </div>
-                            <div class="ratings">
-                                <p class="pull-right">15 reviews</p>
-                                <p>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                </p>
-                            </div>
+                            <button type="submit" id="name" name="first" value="shirt_simple">add to cart</button>
                         </div>
                     </div>
 
                     <div class="col-sm-4 col-lg-4 col-md-4">
                         <div class="thumbnail">
-                            <img src="http://placehold.it/320x150" alt="">
+                            <img src="images/t_shirt3.jpg" alt="">
                             <div class="caption">
                                 <h4 class="pull-right">$64.99</h4>
                                 <h4><a href="#">Second Product</a>
                                 </h4>
                                 <p>This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                             </div>
-                            <div class="ratings">
-                                <p class="pull-right">12 reviews</p>
-                                <p>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star-empty"></span>
-                                </p>
-                            </div>
+                            <button type="submit" id="name" name="first" value="white_simple">add to cart</button>
                         </div>
                     </div>
 
                     <div class="col-sm-4 col-lg-4 col-md-4">
                         <div class="thumbnail">
-                            <img src="http://placehold.it/320x150" alt="">
+                            <img src="images/t_shirt4.jpg" alt="">
                             <div class="caption">
                                 <h4 class="pull-right">$74.99</h4>
                                 <h4><a href="#">Third Product</a>
                                 </h4>
                                 <p>This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                             </div>
-                            <div class="ratings">
-                                <p class="pull-right">31 reviews</p>
-                                <p>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star-empty"></span>
-                                </p>
-                            </div>
+                                <button type="submit" id="name" name="first" value="colored">add to cart</button>
                         </div>
                     </div>
 
                     <div class="col-sm-4 col-lg-4 col-md-4">
                         <div class="thumbnail">
-                            <img src="http://placehold.it/320x150" alt="">
+                            <img src="images/t_shirt5.jpg" alt="">
                             <div class="caption">
                                 <h4 class="pull-right">$84.99</h4>
                                 <h4><a href="#">Fourth Product</a>
                                 </h4>
                                 <p>This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                           
                             </div>
-                            <div class="ratings">
-                                <p class="pull-right">6 reviews</p>
-                                <p>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star-empty"></span>
-                                    <span class="glyphicon glyphicon-star-empty"></span>
-                                </p>
-                            </div>
+                            <button type="submit" id="name" name="first" value="colored">add to cart</button>
                         </div>
                     </div>
 
                     <div class="col-sm-4 col-lg-4 col-md-4">
                         <div class="thumbnail">
-                            <img src="http://placehold.it/320x150" alt="">
+                            <img src="images/t_shirt6.jpeg" alt="">
                             <div class="caption">
                                 <h4 class="pull-right">$94.99</h4>
                                 <h4><a href="#">Fifth Product</a>
                                 </h4>
                                 <p>This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                             </div>
-                            <div class="ratings">
-                                <p class="pull-right">18 reviews</p>
-                                <p>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star-empty"></span>
-                                </p>
-                            </div>
+                            <button type="submit" id="name" name="first" value="colored">add to cart</button>
                         </div>
                     </div>
+                    </form>
 
                     <div class="col-sm-4 col-lg-4 col-md-4">
                         <h4><a href="#">Like this template?</a>

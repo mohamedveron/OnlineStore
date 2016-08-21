@@ -9,10 +9,46 @@ and open the template in the editor.
         <title>Register</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript">
+            
+            function validateForm(){
+                
+              var fname = document.getElementById("Firstname").value;
+              var lname = document.getElementById("Lastname").value;
+              var email = document.getElementById("email").value;
+              var pass = document.getElementById("password").value;
+              var pass2 = document.getElementById("password_confirm").value;
+              
+              if(fname == null||fname == ""){
+                  alert('first name must be fiiled out');
+                  return false;
+              }
+               else if(lname == null||lname == ""){
+                  alert('lirst name must be fiiled out');
+                  return false;
+              }
+               else if(email == null||email == ""){
+                  alert('email must be fiiled out');
+                  return false;
+              }
+               else if(pass == null||pass == ""){
+                  alert('password must be fiiled out');
+                  return false;
+              }
+               else if(pass !== pass2){
+                  alert('confirm password does not equal password');
+                  return false;
+              }
+              
+              else
+                  return true;
+            }
+            
+        </script>
     </head>
     <body>
  
-    <form class="form-horizontal" action='RegistrationController' method="POST">
+        <form class="form-horizontal" onsubmit="return validateForm()" action='RegistrationController' method="POST">
   <fieldset>
     <div id="legend">
       <legend class="">Register</legend>

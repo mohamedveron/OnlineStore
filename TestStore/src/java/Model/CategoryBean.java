@@ -5,21 +5,36 @@
  */
 package Model;
 
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author ESC
  */
 @Entity
+@Table(name = "category")
 public class CategoryBean {
+  
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    int Id;
-    String name;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int Id;
+    private String name;
+    @ManyToMany(mappedBy = "categories")
+    private List<ProductBean>products;
+    
+    public List<ProductBean> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<ProductBean> products) {
+        this.products = products;
+    }
 
     public int getId() {
         return Id;

@@ -5,12 +5,13 @@
  */
 package Controller;
 
-import DBlayer.CustomerDAO;
-import DBlayer.ProductDAO;
+import DbAccessLayer.CustomerDAO;
+import DbAccessLayer.ProductDAO;
 import Model.CustomerBean;
 import Model.UserBean;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -49,15 +50,8 @@ public class RegistrationController extends HttpServlet {
         //ProductDAO.addProduct();
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet RegistrationController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet RegistrationController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+             RequestDispatcher request1 = getServletContext().getRequestDispatcher("/login.html");
+                request1.forward(request, response);
         }
     }
 

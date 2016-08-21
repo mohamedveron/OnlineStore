@@ -5,23 +5,72 @@
  */
 package Model;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author ESC
  */
 @Entity
+@Table(name = "product")
 public class ProductBean {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    int Id;
-    String name;
-    String image;
-    int quantity;
+    private int Id;
+    private String name;
+    private String image;
+    private int quantity;
+    
+    @ManyToMany(mappedBy = "products",fetch = FetchType.EAGER)
+    private List<CustomerBean>customers;
+    
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "product_category")
+    private List<CategoryBean>categories;
+    
+    @OneToMany(mappedBy = "product")
+    private List<Order_Products>orders;
+    
+    public ProductBean(){
+        this.customers = new ArrayList<>();
+    }
+
+   
+    public List<Order_Products> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order_Products> orders) {
+        this.orders = orders;
+    }
+
+    public List<CategoryBean> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<CategoryBean> categories) {
+        this.categories = categories;
+    }
+
+    public List<CustomerBean> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(List<CustomerBean> customers) {
+        this.customers = customers;
+    }
 
     public int getId() {
         return Id;
