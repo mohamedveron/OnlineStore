@@ -30,7 +30,7 @@ public class OrderBean {
     private String address;
     private Date date;
     private String status;
-    private String totalCost;
+    private double totalCost;
     
     @OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
     private List<Order_Products>products;
@@ -86,11 +86,11 @@ public class OrderBean {
         this.status = status;
     }
 
-    public String getTotalCost() {
+    public double getTotalCost() {
         return totalCost;
     }
 
-    public void setTotalCost(String totalCost) {
+    public void setTotalCost(double totalCost) {
         this.totalCost = totalCost;
     }
     

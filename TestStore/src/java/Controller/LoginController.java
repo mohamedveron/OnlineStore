@@ -42,7 +42,6 @@ public class LoginController extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             String email = request.getParameter("email");
             String pass  = request.getParameter("password");
-            System.err.println("dksjdkd"+ pass);
             if(!CustomerDAO.findCustomer(email, pass))
             {
                  HttpSession session = request.getSession();
@@ -60,7 +59,11 @@ public class LoginController extends HttpServlet {
             }
             else
             {
-               out.print("wrong email or password");
+               
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('User or password incorrect');");
+                out.println("location='login.html';");
+                out.println("</script>");
             }
         }
     }

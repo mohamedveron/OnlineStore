@@ -41,6 +41,7 @@ public class CustomerDAO {
         else 
             return true;
 }
+    
      public static CustomerBean getCustomer(String email,String password){
         Session session = NewHibernateUtil.getSessionFactory().openSession();
         System.out.println(email + password);
@@ -51,4 +52,5 @@ public class CustomerDAO {
         session.close();
        return list.get(0);
 }
+     
   }

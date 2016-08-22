@@ -5,10 +5,19 @@
  */
 package DbAccessLayer;
 
+import Model.CategoryBean;
+import org.hibernate.Session;
+
 /**
  *
  * @author test
  */
 public class CategoryDAO {
-    
+    public static void addCategory(CategoryBean category){
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.save(category);
+        session.getTransaction().commit();
+        session.close();
+    }
 }

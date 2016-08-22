@@ -11,6 +11,7 @@ import Model.CustomerBean;
 import Model.ProductBean;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,7 +19,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import net.sf.json.JSONObject;
+import org.json.JSONObject;
 
 /**
  *
@@ -40,23 +41,26 @@ public class BasketController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String s = request.getParameter("first");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+       try (PrintWriter out = response.getWriter()) {
            String email = request.getSession().getAttribute("name").toString();
            String pass =  request.getSession().getAttribute("pass").toString();
            CustomerBean customer = CustomerDAO.getCustomer(email, pass);
            ProductBean product = ProductDAO.getProductsByName(s);
            List<ProductBean>products = customer.getProducts();
+           
+           if(ProductDAO.findCustomerProducts(products, product)){
+              //update product quantity 
+               System.out.println("skskhfkshfhkfhdfghdfhg"+ products.size());
+           }
+           
+           else
            ProductDAO.addCustomerProduct(customer, product);
-           System.out.println("skskhfkshfhkfhdfghdfhg"+ products.size());
-           JSONObject json = new JSONObject();
-           json.put("products", products);
-           String ss = json.toString();
-	   System.out.println(ss);
-	   out.print(ss);
-//           request.setAttribute("products", products);
-//           RequestDispatcher request1 = getServletContext().getRequestDispatcher("/showBasket.jsp");
-//           request1.forward(request, response);
+//            JSONObject json = new JSONObject();
+//            json.put("products", "0products");
+//            System.out.println(json.toString());
+           request.setAttribute("products", products);
+           RequestDispatcher request1 = getServletContext().getRequestDispatcher("/showBasket.jsp");
+           request1.forward(request, response);
         }
     }
 

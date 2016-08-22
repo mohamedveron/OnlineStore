@@ -17,6 +17,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.json.JSONObject;
 
 /**
  *
@@ -32,6 +33,7 @@ public class ProductBean {
     private String name;
     private String image;
     private int quantity;
+    private double price;
     
     @ManyToMany(mappedBy = "products",fetch = FetchType.EAGER)
     private List<CustomerBean>customers;
@@ -42,6 +44,18 @@ public class ProductBean {
     
     @OneToMany(mappedBy = "product")
     private List<Order_Products>orders;
+    
+    @ManyToMany(mappedBy = "products" , fetch = FetchType.EAGER)
+    private List<BasketBean>basket;
+
+    public List<BasketBean> getBasket() {
+        return basket;
+    }
+
+    public void setBasket(List<BasketBean> basket) {
+        this.basket = basket;
+    }
+    
     
     public ProductBean(){
         this.customers = new ArrayList<>();
@@ -104,5 +118,12 @@ public class ProductBean {
         this.quantity = quantity;
     }
     
+     public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
     
 }

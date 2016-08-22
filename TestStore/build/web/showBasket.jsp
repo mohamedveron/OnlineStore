@@ -19,7 +19,8 @@
     </head>
     <body>
             <table class="table">
-                <% List<ProductBean> products = (List<ProductBean>)request.getAttribute("products"); %>
+                <% List<ProductBean> products = (List<ProductBean>)request.getAttribute("products");
+                request.getSession().setAttribute("products", products); %>
                 
   <thead>
     <tr>
@@ -44,7 +45,7 @@
     <form action="StoreHome.jsp" method="POST">
         <input type="submit" value="continue shopping">
     </form>
-    <form action="" method="POST">
+    <form action="OrderController" method="POST">
         <input type="submit" value="submit Order">
     </form>
     </body>

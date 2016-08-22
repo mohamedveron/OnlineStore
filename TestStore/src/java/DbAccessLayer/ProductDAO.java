@@ -53,5 +53,19 @@ public class ProductDAO {
         session.close();
     }
     
-    //public static void getCustomerProducts(C)
+   public static boolean findCustomerProducts(List<ProductBean>products , ProductBean product){
+        
+        boolean flag = false;
+        for(int i=0;i<products.size();i++){
+            if(products.get(i).getName().equals(product.getName())){
+                flag = true;
+                break;
+            }
+        }
+        
+        if(flag)
+            return true;
+        else
+            return false;
+    }
 }

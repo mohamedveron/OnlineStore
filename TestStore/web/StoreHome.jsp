@@ -24,18 +24,20 @@
     <link href="design/css/shop-homepage.css" rel="stylesheet">
     
     <script type="text/javascript">
+        
   function sendajax(){
 	  var name = document.getElementById("name").value;
 	  var xmlhttp = new XMLHttpRequest();
-	  xmlhttp.open("POST","HomeStoreController",true);
+	  xmlhttp.open("POST","BasketController",true);
 	  xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	  xmlhttp.send("name="+ name);
+         
 	  xmlhttp.onreadystatechange = function()
 	  {
 		  if( xmlhttp.readyState == 4 && xmlhttp.status == 200)
 			  {
 			    var json = JSON.parse(xmlhttp.responseText);
-			    alert(json.name)
+			    alert(json.products.length)
 			    var table1 = document.getElementById("table");
 			    var td1 = document.createElement("td");
 			    td1.vale = "djkd";
@@ -46,7 +48,6 @@
 	  }
           return false;
   }
-
 </script>
 
 </head>
@@ -149,7 +150,7 @@
                     </div>
 
                 </div>
-                <form action ="BasketController" method="POST">
+                <form method="POST" action="BasketController" >
                 <div class="row">
 
                     <div class="col-sm-4 col-lg-4 col-md-4">
@@ -261,4 +262,3 @@
 </body>
 
 </html>
-

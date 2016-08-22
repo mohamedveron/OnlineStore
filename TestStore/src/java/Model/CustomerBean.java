@@ -31,7 +31,11 @@ public class CustomerBean extends UserBean {
     @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(name = "customer_products")
     private List<ProductBean>products = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "customer",fetch = FetchType.EAGER,cascade = {CascadeType.ALL})    
+    private List<BasketBean>basket = new ArrayList<>();
 
+  
     //Constructors
 	public CustomerBean(){
 		super();
@@ -65,6 +69,15 @@ public class CustomerBean extends UserBean {
     public void addProduct(ProductBean p){
         this.products.add(p);
     }
+    
+      public List<BasketBean> getBasket() {
+        return basket;
+    }
+
+    public void setBasket(List<BasketBean> basket) {
+        this.basket = basket;
+    }
+
     
     public void addAddress(AddressBean address){
      this.addresses.add(address);

@@ -50,8 +50,8 @@ public class RegistrationController extends HttpServlet {
         //ProductDAO.addProduct();
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-             RequestDispatcher request1 = getServletContext().getRequestDispatcher("/login.html");
-                request1.forward(request, response);
+               RequestDispatcher request1 = getServletContext().getRequestDispatcher("/login.html");
+               request1.forward(request, response);
         }
     }
 
