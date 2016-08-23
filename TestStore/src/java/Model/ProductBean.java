@@ -23,6 +23,8 @@ import org.json.JSONObject;
  *
  * @author ESC
  */
+
+
 @Entity
 @Table(name = "product")
 public class ProductBean {
@@ -45,8 +47,18 @@ public class ProductBean {
     @OneToMany(mappedBy = "product")
     private List<Order_Products>orders;
     
-    @ManyToMany(mappedBy = "products" , fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "products" , fetch = FetchType.LAZY)
     private List<BasketBean>basket;
+
+    public ProductBean(String name, String image, int quantity, double price, List<CategoryBean> categories) {
+        this.name = name;
+        this.image = image;
+        this.quantity = quantity;
+        this.price = price;
+        this.categories = categories;
+    }
+    
+    
 
     public List<BasketBean> getBasket() {
         return basket;

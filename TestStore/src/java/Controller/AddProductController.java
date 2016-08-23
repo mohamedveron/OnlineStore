@@ -5,16 +5,27 @@
  */
 package Controller;
 
+import Model.CategoryBean;
+import Model.ProductBean;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.tomcat.util.http.fileupload.FileItem;
+import org.apache.tomcat.util.http.fileupload.FileUploadException;
+import org.apache.tomcat.util.http.fileupload.RequestContext;
+import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 /**
  *
@@ -35,16 +46,40 @@ public class AddProductController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String exception = "";
+        String name = "";
+        double price = 0;
+        int quantity = 0;
+        ServletContext context = request.getServletContext();
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
 		
-		/*DiskFileItemFactory factory = new DiskFileItemFactory();
+		DiskFileItemFactory factory = new DiskFileItemFactory();
 		factory.setSizeThreshold(500000);
-		FileUpload upload = new FileUpload(factory);
+		//FileUpload upload = new FileUpload(factory);
+                ServletFileUpload upload = new ServletFileUpload(factory);
+                    // maximum file size to be uploaded.
+                    upload.setSizeMax( 4 * 1024 );
+
+                
 		Map<String, String> fields = new HashMap<String, String>();
-		try {
-			List<FileItem> items = upload.parseRequest(request);
+		
+                        boolean check  = ServletFileUpload.isMultipartContent(request); 
+                         if( !check ){
+                                out.println("<html>");
+                                out.println("<head>");
+                                out.println("<title>Servlet upload</title>");  
+                                out.println("</head>");
+                                out.println("<body>");
+                                out.println("<p>No file uploaded</p>"); 
+                                out.println("</body>");
+                                out.println("</html>");
+                                return;
+                             }
+                            System.out.println("henaaaaaaaaaaaaaaaaaa...." + fields.size());
+			List<FileItem> items = upload.parseRequest((RequestContext) request);
 			FileItem file = null;
+                         System.out.println("henaaaaaaaaaaaaaaaaaa");
 			for(FileItem item : items){
 				if(item.isFormField()){
 					fields.put(item.getFieldName(), item.getString());
@@ -54,42 +89,32 @@ public class AddProductController extends HttpServlet {
 				}
 			}
 			if(file == null){
-				return Globals.FILE_PROBLEM;
+                            System.out.println("henaaaaaaaaaaaaaaaaaa");
+				exception = Globals.FILE_PROBLEM;
 			}
 			else{
-				String color = fields.get("color");
-				String modelName = fields.get("modelName");
-				int convertable = Integer.parseInt(fields.get("convertable"));
-				String brandName = fields.get("brand");
-				String shape = fields.get("shape");
-				int type = Integer.parseInt(fields.get("type"));
-				String material = fields.get("material");
-				double price = Double.parseDouble(fields.get("price"));
-				Brand brand = BrandDAO.getBrandByName(brandName);
-				if(brand == null){
-					return Globals.BRAND_NOT_EXIST;
+				name = fields.get("modelName");
+				String p = fields.get("price");
+                                String q = fields.get("quantity");
+				price = Double.parseDouble(p);
+                                quantity = Integer.parseInt(q);
 				}
-				if(GlassesDAO.getGlassesByModelName(modelName) == null){
 					String firstPathPart = context.getRealPath("") + "/";
-					String secondPathPart = "Glasses"
-							+ "/" + brandName + "/" + file.getName();
+					String secondPathPart = "images"
+							+ "/" +  file.getName();
 					FileUtilities.saveFile(firstPathPart + secondPathPart, file.getInputStream());
-					Glasses glasses = new Glasses(color, modelName, secondPathPart, convertable, shape, type, material, price, brand);
-					GlassesDAO.addGlasses(glasses);
-					return Globals.SUCCESS;
-				}
-				else{
-					return Globals.ALREADY_EXIST;
-				}
-			}
-		} catch (Exception e) {
-			return Globals.FILE_PROBLEM;
-		}
-	}
-        }*/
-    }
+                                        ProductBean product = new ProductBean(name, secondPathPart, quantity, price, new ArrayList<CategoryBean>());
+					
+					exception = Globals.SUCCESS;
+					
 
-    }// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+        } catch (Exception ex) {
+            exception = "cant not save";
+        }
+        
+        System.out.println("error is" + exception);
+}
+                        // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -128,4 +153,4 @@ public class AddProductController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-}
+}           

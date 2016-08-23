@@ -35,7 +35,7 @@ public class OrderDAO {
         products.setDate(new Date());
         products.setOrder(order);
         products.setProduct(product);
-        products.setProduct_price(300);
+        products.setProduct_price(product.getPrice());
         order.getProducts().add(products);
         session.save(products);
         session.update(order);
@@ -57,10 +57,17 @@ public class OrderDAO {
         String hql = "from Order_Products o where o.order.Id =  id  ";
         Query query = session.createQuery(hql);
         List list = query.list();
-        System.out.println(list.size());
         session.close();
         return list;
     }
     
-    //public static void updateOrderProducts(OrderBean order , List)
+    public static List<OrderBean>  getOrders(){
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+        String hql = "from OrderBean";
+        Query query = session.createQuery(hql);
+        List list = query.list();
+        session.close();
+        return list;
+    }
+    
 }

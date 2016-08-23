@@ -64,11 +64,11 @@
       <ul class="nav navbar-nav">
         <li class="active"><a href="HomeStoreController">Home</a></li>
         <li><a href="addCategory.jsp">AddCategory</a></li>
-        <li><a href="#">CheckOrders</a></li>
+        <li><a href="GetOrdersController">CheckOrders</a></li>
         <li><a href="addProduct.jsp">AddProduct</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-          <li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+          <li><a href="AdminLogin.jsp"><span class="glyphicon glyphicon-log-in"></span> logout</a></li>
       </ul>
     </div>
   </div>

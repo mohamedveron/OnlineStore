@@ -29,24 +29,6 @@
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
         <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
         
-        <script type="text/javascript">
-  function sendajax(){
-	  var email = document.getElementById("email").value;
-          var pass = document.getElementById("password").value;
-	  var xmlhttp = new XMLHttpRequest();
-	  xmlhttp.open("POST","LoginController",true);
-	  xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	  xmlhttp.send("email="+ email + "&password=" + pass);
-	  xmlhttp.onreadystatechange = function()
-	  {
-		  if( xmlhttp.readyState == 4 && xmlhttp.status == 200)
-			  {
-			    document.getElementById("show_response").innerHTML = xmlhttp.responseText;
-			  }
-	  }
-          return false;
-  }
-</script>
     </head>
 
     <body>

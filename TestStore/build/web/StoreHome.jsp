@@ -24,18 +24,18 @@
     <link href="design/css/shop-homepage.css" rel="stylesheet">
     
     <script type="text/javascript">
-        
-  function sendajax(){
-	  var name = document.getElementById("name").value;
+    
+     function sendajax(){
+	  var name = document.getElementById("first").value;
 	  var xmlhttp = new XMLHttpRequest();
 	  xmlhttp.open("POST","BasketController",true);
 	  xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	  xmlhttp.send("name="+ name);
-         
+	  xmlhttp.send("first="+ name);
 	  xmlhttp.onreadystatechange = function()
 	  {
 		  if( xmlhttp.readyState == 4 && xmlhttp.status == 200)
 			  {
+                              alert('here');
 			    var json = JSON.parse(xmlhttp.responseText);
 			    alert(json.products.length)
 			    var table1 = document.getElementById("table");
@@ -48,8 +48,8 @@
 	  }
           return false;
   }
-</script>
-
+  </script>
+  
 </head>
 
 <body>
@@ -103,7 +103,7 @@
                 <br>
                 <p> Your Basket </p>
                 <br>
-                         <table class="table">
+                         <table  class="table">
                 
                                 <thead>
                                   <tr>
@@ -150,7 +150,6 @@
                     </div>
 
                 </div>
-                <form method="POST" action="BasketController" >
                 <div class="row">
 
                     <div class="col-sm-4 col-lg-4 col-md-4">
@@ -163,7 +162,7 @@
                                 <p>See more snippets like this online store item at.</p>
                                 
                             </div>
-                            <button type="submit" id="name" name="first" value="shirt_simple">add to cart</button>
+                            <button type="submit" id="first" name="first" value="shirt_simple" onclick="sendajax()">add to cart</button>
                         </div>
                     </div>
 
@@ -176,7 +175,7 @@
                                 </h4>
                                 <p>This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                             </div>
-                            <button type="submit" id="name" name="first" value="white_simple">add to cart</button>
+                            <button type="submit" id="first" name="first" value="white_simple" onclick="sendajax()">add to cart</button>
                         </div>
                     </div>
 
@@ -189,7 +188,7 @@
                                 </h4>
                                 <p>This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                             </div>
-                                <button type="submit" id="name" name="first" value="colored">add to cart</button>
+                                <button type="submit" id="first" name="first" value="colored">add to cart</button>
                         </div>
                     </div>
 
@@ -203,7 +202,7 @@
                                 <p>This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                            
                             </div>
-                            <button type="submit" id="name" name="first" value="colored">add to cart</button>
+                            <button type="submit" id="first" name="first" value="colored">add to cart</button>
                         </div>
                     </div>
 
@@ -216,17 +215,10 @@
                                 </h4>
                                 <p>This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                             </div>
-                            <button type="submit" id="name" name="first" value="colored">add to cart</button>
+                            <button type="submit" id="first" name="first" value="colored">add to cart</button>
                         </div>
                     </div>
-                    </form>
-
-                    <div class="col-sm-4 col-lg-4 col-md-4">
-                        <h4><a href="#">Like this template?</a>
-                        </h4>
-                        <p>If you like this template, then check out <a target="_blank" href="http://maxoffsky.com/code-blog/laravel-shop-tutorial-1-building-a-review-system/">this tutorial</a> on how to build a working review system for your online store!</p>
-                        <a class="btn btn-primary" target="_blank" href="http://maxoffsky.com/code-blog/laravel-shop-tutorial-1-building-a-review-system/">View Tutorial</a>
-                    </div>
+         
 
                 </div>
 
@@ -245,7 +237,7 @@
         <footer>
             <div class="row">
                 <div class="col-lg-12">
-                    <p>Copyright &copy; Your Website 2014</p>
+                    <p>Copyright &copy; Mohamed AbdEl Mohaimen</p>
                 </div>
             </div>
         </footer>
@@ -256,8 +248,13 @@
     <!-- jQuery -->
     <script src="design/js/jquery.js"></script>
 
+    <script type="text/javascript">
+        
+    </script>
+    
     <!-- Bootstrap Core JavaScript -->
     <script src="design/js/bootstrap.min.js"></script>
+    
 
 </body>
 

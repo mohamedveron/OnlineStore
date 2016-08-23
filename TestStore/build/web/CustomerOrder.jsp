@@ -20,7 +20,8 @@
     <body>
             <table class="table">
                 <% List<Order_Products> products = (List<Order_Products>)request.getAttribute("products");
-                request.getSession().setAttribute("products", products); %>
+                request.getSession().setAttribute("products", products); 
+              double x = (Double)request.getAttribute("total"); %>
                 
   <thead>
     <tr>
@@ -41,7 +42,7 @@
     <% } %>
     <tr>
       <th scope="row">Total cost is</th>
-      <td> <p>900</p> </td>
+      <td> <p> <%= x %> </p> </td>
     </tr>
   </tbody>
 </table>

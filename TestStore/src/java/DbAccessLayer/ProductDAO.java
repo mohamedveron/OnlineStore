@@ -44,6 +44,15 @@ public class ProductDAO {
         return products.get(0);
     }
     
+    public static ProductBean getProductsById(int id){
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("from ProductBean p where p.Id = id ");
+        List<ProductBean> products = query.list();
+        session.close();
+        
+        return products.get(0);
+    }
+    
     public static void addCustomerProduct(CustomerBean customer,ProductBean product){
         Session session = NewHibernateUtil.getSessionFactory().openSession();
         customer.getProducts().add(product);

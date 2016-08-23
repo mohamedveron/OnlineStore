@@ -47,8 +47,11 @@ public class OrderController extends HttpServlet {
             OrderBean order = new OrderBean();
             order.setAddress("323 st. haram");
             order.setProducts(new ArrayList<Order_Products>());
-            order.setAdmin(AdminDAO.getAdmin("mohamed", "123123"));
-            order.setTotalCost(0);
+            order.setAdmin(AdminDAO.getAdmin("ahmed", "123"));
+            double sum = 0;
+             for(int i=0;i<products.size();i++)
+                 sum += products.get(i).getPrice();
+            order.setTotalCost(sum);
             order.setDate(new Date());
             order.setStatus("pending");
             OrderDAO.addOrder(order);
@@ -58,9 +61,9 @@ public class OrderController extends HttpServlet {
             
             List<Order_Products>oProducts = order.getProducts();
             request.setAttribute("products",oProducts);
+            request.setAttribute("total", sum);
             RequestDispatcher request1 = getServletContext().getRequestDispatcher("/CustomerOrder.jsp");
-                request1.forward(request, response);
-            
+            request1.forward(request, response);
         }
     }
 
