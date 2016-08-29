@@ -18,5 +18,6 @@
     <mapping class="Model.Order_Products"/>
     <mapping class="Model.ProductBean"/>
     <mapping class="Model.BasketBean"/>
+    <mapping class="Model.Basket_Products"/>
   </session-factory>
 </hibernate-configuration>

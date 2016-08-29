@@ -6,6 +6,7 @@
 package DbAccessLayer;
 
 import Model.CustomerBean;
+import Model.OrderBean;
 import org.hibernate.Session;
 import Model.ProductBean;
 import java.util.List;
@@ -30,7 +31,7 @@ public class ProductDAO {
         List<ProductBean> products = query.list();
         session.close();
         for(int i=0;i<products.size();i++){
-            System.err.println(products.get(i).getName());
+            System.err.println(products.get(i).getImage());
         }
         return products;
     }
@@ -76,5 +77,13 @@ public class ProductDAO {
             return true;
         else
             return false;
+    }
+   
+    public static void updateStock(ProductBean product){
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.update(product);
+        session.getTransaction().commit();
+        session.close();
     }
 }

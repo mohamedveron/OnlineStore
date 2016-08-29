@@ -9,18 +9,14 @@ import DbAccessLayer.BasketDAO;
 import DbAccessLayer.CustomerDAO;
 import DbAccessLayer.ProductDAO;
 import Model.BasketBean;
+import Model.Basket_Products;
 import Model.CustomerBean;
+import Model.Product;
 import Model.ProductBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -48,52 +44,84 @@ public class BasketController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        System.out.println("skskhfkshfhkfhdfghdfhgbasket");
+        
         String s = request.getParameter("first");
-        System.out.println("getname"+ s);
+        String type = request.getParameter("type");
        try (PrintWriter out = response.getWriter()) {
            String email = request.getSession().getAttribute("name").toString();
            String pass =  request.getSession().getAttribute("pass").toString();
            String id = request.getSession().getAttribute("basketId").toString();
-           System.out.println("88888888888888888888.." + id);
+         
+           double total = 0;
            CustomerBean customer = CustomerDAO.getCustomer(email, pass);
            ProductBean product = ProductDAO.getProductsByName(s);
+          
            BasketBean basket = BasketDAO.getBasket(id);
-              List<ProductBean>prods = basket.getProducts();
+           
+            List<Basket_Products>prods = BasketDAO.getBasket_products(id);
               
-           if( BasketDAO.findBasketProducts(basket.getProducts(), product)){
+           if( BasketDAO.findBasketProducts(prods, product)!= null){
               //update product quantity 
-               System.out.println("skskhfkshfhkfhdfghdfhgbasket"+ id + "lll  " +prods.size());
+               System.out.println("Controller.BasketController.processRequest()" + "updaaate");
+              Basket_Products bprod = BasketDAO.findBasketProducts(prods, product);
+              int value = 0;
+              
+              if(type.equals("decrease"))
+              {
+                     
+                  if(bprod.getQuantity()>=1)
+                  {
+                      value = bprod.getQuantity() - 1;
+                      product.setStock(product.getStock()+1);
+                  } 
+                  else
+                      value = 0;
+              }
+
+              else if(type.equals("increase"))
+              {
+                  value = bprod.getQuantity() + 1;
+                  product.setStock(product.getStock()-1);
+              }
+              
+               bprod.setQuantity(value);
+               BasketDAO.updateQuantity(bprod);
+               ProductDAO.updateStock(product);
            }
            
            else
            {
+                
+                System.out.println("add new product  "+ basket.getId() + "session id " + id);
                BasketDAO.addProductToBasket(basket, product);
-            
            }
-           Set<String>p = new TreeSet<>();
-           for(int i=0;i<prods.size();i++)
-               p.add(prods.get(i).getName());
            
+           
+            prods = BasketDAO.getBasket_products(id);
             List<ProductBean>products = new ArrayList<>();
-           Iterator iterator = p.iterator(); 
+            request.getSession().setAttribute("products", products);
+            List<Product>products1 = new ArrayList<>();
            
-           while(iterator.hasNext())
-               products.add(ProductDAO.getProductsByName(iterator.next().toString()));
-           
+           for(int i=0;i<prods.size();i++)
+           {
+               ProductBean pro = prods.get(i).getProduct();
+               total += pro.getPrice()*prods.get(i).getQuantity();
+               products.add(pro);
+               products1.add(new Product(pro.getId(), pro.getName(), pro.getImage(), prods.get(i).getQuantity(), pro.getPrice()));
+           }
                         
             JSONObject json = new JSONObject();
-            json.put("products", products);
+            json.put("products", products1);
+            json.put("total", total);
             System.out.println(json.toString());
             out.print(json);
-//           request.setAttribute("products", products);
-//           RequestDispatcher request1 = getServletContext().getRequestDispatcher("/showBasket.jsp");
-//           request1.forward(request, response);
+
         } catch (JSONException ex) {
             System.out.println(Globals.PARSING_ERROR);
         } 
-     }
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+}
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

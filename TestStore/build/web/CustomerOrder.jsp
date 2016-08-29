@@ -20,8 +20,7 @@
     <body>
             <table class="table">
                 <% List<Order_Products> products = (List<Order_Products>)request.getAttribute("products");
-                request.getSession().setAttribute("products", products); 
-              double x = (Double)request.getAttribute("total"); %>
+                           double x = (Double)request.getAttribute("total"); %>
                 
   <thead>
     <tr>
@@ -34,7 +33,7 @@
   <tbody>
       <% for(int i=0;i<products.size();i++){ %>
     <tr>
-      <th scope="row">1</th>
+      <th scope="row"><%= i + 1 %></th>
       <td> <%= products.get(i).getProduct().getName() %> </td>
       <td> <%= products.get(i).getProduct_price() %> </td>
       <td> <%= products.get(i).getDate() %> </td>

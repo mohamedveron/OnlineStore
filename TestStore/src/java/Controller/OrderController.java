@@ -50,7 +50,8 @@ public class OrderController extends HttpServlet {
             order.setAdmin(AdminDAO.getAdmin("ahmed", "123"));
             double sum = 0;
              for(int i=0;i<products.size();i++)
-                 sum += products.get(i).getPrice();
+                 sum += products.get(i).getPrice() * products.get(i).getStock();
+             
             order.setTotalCost(sum);
             order.setDate(new Date());
             order.setStatus("pending");

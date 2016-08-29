@@ -24,6 +24,8 @@ public class Order_Products {
     private int id;
     private Date date;
     private double product_price;
+    private int quantity;
+
     
      @ManyToOne
     private ProductBean product;
@@ -68,5 +70,13 @@ public class Order_Products {
 
     public void setOrder(OrderBean order) {
         this.order = order;
+    }
+    
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

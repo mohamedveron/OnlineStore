@@ -40,9 +40,10 @@ public class HomeStoreController extends HttpServlet {
         request.setAttribute("products", products);
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.print(products.size());
-            RequestDispatcher request1 = getServletContext().getRequestDispatcher("/StoreHome.jsp");
-            request1.forward(request, response);
+              request.getSession().setAttribute("orderproducts", products);
+//            RequestDispatcher request1 = getServletContext().getRequestDispatcher("/testStore.jsp");
+//            request1.forward(request, response);
+            response.sendRedirect("testStore.jsp");
         }
     }
 

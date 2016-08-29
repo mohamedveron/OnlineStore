@@ -26,7 +26,6 @@
     <script type="text/javascript">
         
     function updateBasket(name){
-        alert(name);
               var xmlhttp = new XMLHttpRequest();
 	      xmlhttp.open("POST","BasketController",true);
 	      xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -38,6 +37,7 @@
                           $("#table tbody").remove();
                           var json = JSON.parse(xmlhttp.responseText);
                           var products = json.products;
+                          var total = json.total;
                       for (var i in products) {
                         var trHTML = '';
                         trHTML += '<tr> <td>' + products[i].name + 
@@ -46,6 +46,7 @@
                             $("#table").append(trHTML);
 			    
 			  }
+                          $("#total").val(total);
                           
                             }
 	  }
@@ -71,6 +72,7 @@
                         $("#table tbody").remove();
                       var json = JSON.parse(xmlhttp.responseText);
                       var products = json.products;
+                      var total = json.total;
                       for (var i in products) {
                         var trHTML = '';
                         trHTML += '<tr> <td>' + products[i].name + 
@@ -79,11 +81,12 @@
                             $("#table").append(trHTML);
 			    
 			  }
-                          
+                          $("#total").val(total);
                             }
 	  }
           return false;
   }
+  
   </script>
   
 </head>
@@ -167,6 +170,8 @@
                                 </tbody>
                                 </table>
                 <form action="OrderController" method="POST">
+                    Total Cost: <input type="text" id="total" name="total" >
+                    <br>
                     <input type="submit" value="submit Order">
                 </form>
             </div>
@@ -204,77 +209,26 @@
 
                 </div>
                 <div class="row">
+                <% List<ProductBean> products = (List<ProductBean>)request.getSession().getAttribute("storeproducts");%>
+                <% for(int i=0;i<products.size();i++){ %>
+                
 
                     <div class="col-sm-4 col-lg-4 col-md-4">
                         <div class="thumbnail">
-                            <img src="images/t_shirt1.jpeg" alt="">
+                            <img src='<%= products.get(i).getImage()%>' alt="">
                             <div class="caption">
-                                <h4 class="pull-right">$24.99</h4>
-                                <h4 name="first" value="first"><a href="StoreItem.jsp">First Product</a>
+                                <h4 class="pull-right"><%= products.get(i).getPrice()%></h4>
+                                <h4 name="first" value="first"><a href="StoreItem.jsp"><%= products.get(i).getName()%></a>
                                 </h4>
                                 <p>See more snippets like this online store item at.</p>
                                 
                             </div>
-                            <button type="submit" id="first" name="first" value="shirt_simple" onclick="sendajax(this.value)">add to cart</button>
+                            <button type="submit" id="first" name="first" value='<%= products.get(i).getName()%>' onclick="sendajax(this.value)" >add to cart</button>
                         </div>
                     </div>
-
-                    <div class="col-sm-4 col-lg-4 col-md-4">
-                        <div class="thumbnail">
-                            <img src="images/t_shirt3.jpg" alt="">
-                            <div class="caption">
-                                <h4 class="pull-right">$64.99</h4>
-                                <h4><a href="#">Second Product</a>
-                                </h4>
-                                <p>This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                            </div>
-                            <button type="submit" id="first" name="first" value="white_simple" onclick="sendajax(this.value)">add to cart</button>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-4 col-lg-4 col-md-4">
-                        <div class="thumbnail">
-                            <img src="images/t_shirt4.jpg" alt="">
-                            <div class="caption">
-                                <h4 class="pull-right">$74.99</h4>
-                                <h4><a href="#">Third Product</a>
-                                </h4>
-                                <p>This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                            </div>
-                                <button type="submit" id="first" name="first" value="colored"  onclick="sendajax(this.value)">add to cart</button>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-4 col-lg-4 col-md-4">
-                        <div class="thumbnail">
-                            <img src="images/t_shirt5.jpg" alt="">
-                            <div class="caption">
-                                <h4 class="pull-right">$84.99</h4>
-                                <h4><a href="#">Fourth Product</a>
-                                </h4>
-                                <p>This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                           
-                            </div>
-                            <button type="submit" id="first" name="first" value="colored1">add to cart</button>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-4 col-lg-4 col-md-4">
-                        <div class="thumbnail">
-                            <img src="images/t_shirt6.jpeg" alt="">
-                            <div class="caption">
-                                <h4 class="pull-right">$94.99</h4>
-                                <h4><a href="#">Fifth Product</a>
-                                </h4>
-                                <p>This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                            </div>
-                            <button type="submit" id="first" name="first" value="colored2">add to cart</button>
-                        </div>
-                    </div>
-         
-
+                            <% } %>
                 </div>
-
+                    
             </div>
 
         </div>

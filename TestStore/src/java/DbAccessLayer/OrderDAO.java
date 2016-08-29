@@ -52,9 +52,18 @@ public class OrderDAO {
         session.close();
     }
     
-    public static List<Order_Products> getOrder_products(int id){
+    
+    public static void updateStatus(OrderBean order){
         Session session = NewHibernateUtil.getSessionFactory().openSession();
-        String hql = "from Order_Products o where o.order.Id =  id  ";
+        session.beginTransaction();
+        session.update(order);
+        session.getTransaction().commit();
+        session.close();
+    }
+    
+    public static List<Order_Products> getOrder_products(String id){
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+        String hql = "from Order_Products o where o.order.Id =  '" + id +"'  ";
         Query query = session.createQuery(hql);
         List list = query.list();
         session.close();
@@ -70,4 +79,12 @@ public class OrderDAO {
         return list;
     }
     
+      public static OrderBean  getOrder(String id){
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+        String hql = "from OrderBean o where o.Id =  '" + id +"'  ";
+        Query query = session.createQuery(hql);
+        List<OrderBean> list = query.list();
+        session.close();
+        return list.get(0);
+    }
 }

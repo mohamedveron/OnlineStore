@@ -8,13 +8,16 @@ package Controller;
 import DbAccessLayer.AddressDAO;
 import DbAccessLayer.BasketDAO;
 import DbAccessLayer.CustomerDAO;
+import DbAccessLayer.ProductDAO;
 import Model.AddressBean;
 import Model.BasketBean;
+import Model.Basket_Products;
 import Model.CustomerBean;
 import Model.ProductBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -47,6 +50,7 @@ public class LoginController extends HttpServlet {
             String email = request.getParameter("email");
             String pass  = request.getParameter("password");
             String id = "";
+            List<ProductBean>products = ProductDAO.getProducts();
             if(!CustomerDAO.findCustomer(email, pass))
             {
                  HttpSession session = request.getSession();
@@ -54,13 +58,14 @@ public class LoginController extends HttpServlet {
                      session.invalidate();
                      session = request.getSession(true);
                  }
-                 
+                  
                 session.setAttribute("name",email );
                 session.setAttribute("pass", pass);
                 CustomerBean customer = CustomerDAO.getCustomer(email, pass);
                 BasketBean basket = new BasketBean();
-                BasketDAO.addCustomerProducts(basket,customer, new ArrayList<ProductBean>());
+                BasketDAO.addCustomerProducts(basket,customer, new ArrayList<Basket_Products>());
                 session.setAttribute("basketId", basket.getId());
+                session.setAttribute("storeproducts", products);
                 //System.out.println("basket has been created" + basket.getId());
                 AddressDAO.addAddress(customer);
                 response.sendRedirect("StoreHome.jsp");

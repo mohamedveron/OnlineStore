@@ -1,6 +1,7 @@
 
 package Model;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -11,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -21,12 +23,11 @@ import javax.persistence.Table;
 @Table(name = "basket")
 public class BasketBean {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int Id;
     
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinTable(name = "products_basket")
-    private List<ProductBean>products;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product",fetch = FetchType.EAGER)
+    private List<Basket_Products>products ;
     
     @ManyToOne
     private  CustomerBean customer;
@@ -47,11 +48,11 @@ public class BasketBean {
         this.Id = Id;
     }
 
-    public List<ProductBean> getProducts() {
+    public List<Basket_Products> getProducts() {
         return products;
     }
 
-    public void setProducts(List<ProductBean> products) {
+    public void setProducts(List<Basket_Products> products) {
         this.products = products;
     }
 }

@@ -32,6 +32,7 @@ public class OrderBean {
     private String status;
     private double totalCost;
     
+    
     @OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
     private List<Order_Products>products;
     
@@ -93,5 +94,7 @@ public class OrderBean {
     public void setTotalCost(double totalCost) {
         this.totalCost = totalCost;
     }
+    
+    
     
 }

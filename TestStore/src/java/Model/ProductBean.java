@@ -34,7 +34,7 @@ public class ProductBean {
     private int Id;
     private String name;
     private String image;
-    private int quantity;
+    private int stock;
     private double price;
     
     @ManyToMany(mappedBy = "products",fetch = FetchType.EAGER)
@@ -47,24 +47,24 @@ public class ProductBean {
     @OneToMany(mappedBy = "product")
     private List<Order_Products>orders;
     
-    @ManyToMany(mappedBy = "products" , fetch = FetchType.LAZY)
-    private List<BasketBean>basket;
+    @OneToMany(mappedBy = "basket",cascade = CascadeType.ALL)
+    private List<Basket_Products>basket;
 
     public ProductBean(String name, String image, int quantity, double price, List<CategoryBean> categories) {
         this.name = name;
         this.image = image;
-        this.quantity = quantity;
+        this.stock = quantity;
         this.price = price;
         this.categories = categories;
     }
     
     
 
-    public List<BasketBean> getBasket() {
+    public List<Basket_Products> getBasket() {
         return basket;
     }
 
-    public void setBasket(List<BasketBean> basket) {
+    public void setBasket(List<Basket_Products> basket) {
         this.basket = basket;
     }
     
@@ -122,12 +122,12 @@ public class ProductBean {
         this.image = image;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public int getStock() {
+        return stock;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setStock(int stock) {
+        this.stock = stock;
     }
     
      public double getPrice() {
